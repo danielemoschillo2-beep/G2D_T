@@ -32,6 +32,10 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     int FPS = 60;
 
+    // Timer
+    public long gameStartTime = 0;
+    public boolean isGameRunning = false;
+
     // Sistema
     TileManager tileM = new TileManager(this);
     ControlloTastiera keyH = new ControlloTastiera();
@@ -69,7 +73,22 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject();
 
         playMusic(0);
+        startTimer();
 
+    }
+
+    public void startTimer() {
+        gameStartTime = System.currentTimeMillis();
+        isGameRunning = true;
+    }
+
+    public void stopTimer() {
+        isGameRunning = false;
+    }
+
+    public long getElapsedTime() {
+        if (!isGameRunning) return 0;
+        return (System.currentTimeMillis() - gameStartTime) / 1000;
     }
 
     public void StartGameThread() {
