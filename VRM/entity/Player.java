@@ -30,8 +30,8 @@ public class Player extends Entity {
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
         solidArea = new Rectangle();
-        solidArea.x = 8;
-        solidArea.y = 16;
+        solidArea.x = 5;
+        solidArea.y = 12;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         solidArea.width = 32;
@@ -172,13 +172,15 @@ public class Player extends Entity {
                     gp.playSE(1);
                     hasKey++;
                     gp.obj[i] = null;
-                    System.out.println("Hai trovato una chiave! Ora ne hai " + hasKey);
+                    gp.ui.showMessage("Chiave trovata!");
                     break;
                 case "door":
                     if (hasKey > 0) {
                         gp.playSE(3);
                         gp.obj[i] = null;
                         hasKey--;
+                    } else {
+                        gp.ui.showMessage("La porta è chiusa!");
                     }
                     System.out.println("Hai " + hasKey + " chiavi!");
                     break;
@@ -186,7 +188,13 @@ public class Player extends Entity {
                     gp.playSE(2);
                     speed += 2;
                     gp.obj[i] = null;
-                    System.out.println("Hai trovato degli stivali! Ora la tua velocità è " + speed);
+                    gp.ui.showMessage("Speed ++");
+                    break;
+                case "chest":
+                    gp.ui.showMessage("Hai il trovato un tesoro! Sei il GOAT!");
+                    gp.stopMusic();
+                    gp.playSE(4);
+                    gp.ui.gameFinished = true;
                     break;
             }
 
