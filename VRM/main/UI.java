@@ -9,6 +9,7 @@ public class UI {
 
     GamePanel gp;
     Font arial_40, arial_80B;
+    Font arial_30;
     BufferedImage keyImage;
     public boolean messageOn = false;
     public String message = "";
@@ -20,6 +21,7 @@ public class UI {
 
         arial_40 = new Font("Arial", Font.PLAIN, 30);
         arial_80B = new Font("Arial", Font.BOLD, 80);
+        arial_30 = new Font("Arial", Font.BOLD, 28);
         OBJ_Key key = new OBJ_Key();
         keyImage = key.image;
     }
@@ -81,6 +83,27 @@ public class UI {
 
         }
 
+        // Timer in alto a destra
+        drawTimer(g2);
+
+    }
+
+    private void drawTimer(Graphics2D g2) {
+        long elapsedSeconds = gp.getElapsedTime();
+        long minutes = elapsedSeconds / 60;
+        long seconds = elapsedSeconds % 60;
+
+        String timerText = String.format("%02d:%02d", minutes, seconds);
+
+        g2.setFont(arial_30);
+        g2.setColor(java.awt.Color.yellow);
+
+        // Calcola la posizione per allinearlo a destra
+        int timerWidth = g2.getFontMetrics().stringWidth(timerText);
+        int x = gp.screenWidth - timerWidth - 30;
+        int y = 50;
+
+        g2.drawString(timerText, x, y);
     }
 
 }
