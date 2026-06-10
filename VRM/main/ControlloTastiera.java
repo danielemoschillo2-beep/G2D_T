@@ -6,6 +6,8 @@ import java.awt.event.KeyListener;
 public class ControlloTastiera implements KeyListener {
 
     public boolean movimentoSU, movimentoGiu, movimentoDestra, movimentoSinistra;
+    // Debug
+    public boolean checkDrawTime = false;
 
     public void keyTyped(KeyEvent e) {
 
@@ -30,6 +32,15 @@ public class ControlloTastiera implements KeyListener {
         if (code == KeyEvent.VK_D) {
 
             movimentoDestra = true;
+        }
+
+        // Debug
+        if (code == KeyEvent.VK_T) {
+            if (checkDrawTime == false) {
+                checkDrawTime = true;
+            } else if (checkDrawTime == true) {
+                checkDrawTime = false;
+            }
         }
 
     }
