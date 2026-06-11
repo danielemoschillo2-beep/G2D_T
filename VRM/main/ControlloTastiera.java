@@ -5,9 +5,14 @@ import java.awt.event.KeyListener;
 
 public class ControlloTastiera implements KeyListener {
 
+    GamePanel gp;
     public boolean movimentoSU, movimentoGiu, movimentoDestra, movimentoSinistra;
     // Debug
     public boolean checkDrawTime = false;
+
+    public ControlloTastiera(GamePanel gamePanel) {
+        this.gp = gamePanel;
+    }
 
     public void keyTyped(KeyEvent e) {
 
@@ -32,6 +37,14 @@ public class ControlloTastiera implements KeyListener {
         if (code == KeyEvent.VK_D) {
 
             movimentoDestra = true;
+        }
+        if (code == KeyEvent.VK_P) {
+
+            if (gp.gameState == gp.playState) {
+                gp.gameState = gp.pauseState;
+            } else if (gp.gameState == gp.pauseState) {
+                gp.gameState = gp.playState;
+            }
         }
 
         // Debug

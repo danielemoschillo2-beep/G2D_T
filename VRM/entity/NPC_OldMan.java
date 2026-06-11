@@ -1,0 +1,29 @@
+package VRM.entity;
+
+import VRM.main.GamePanel;
+
+public class NPC_OldMan extends Entity {
+
+    public NPC_OldMan(GamePanel gp) {
+        super(gp);
+
+        direzione = "Giu";
+        speed = 1;
+
+        getImage();
+    }
+
+    public void getImage() {
+
+        up1 = setup("/VRM/res/npc/oldman_up_1");
+        up2 = setup("/VRM/res/npc/oldman_up_2");
+        down1 = setup("/VRM/res/npc/oldman_down_1");
+        down2 = setup("/VRM/res/npc/oldman_down_2");
+        left1 = setup("/VRM/res/npc/oldman_left_1");
+        left2 = setup("/VRM/res/npc/oldman_left_2");
+        right1 = setup("/VRM/res/npc/oldman_right_1");
+        right2 = setup("/VRM/res/npc/oldman_right_2");
+
+    }
+
+}

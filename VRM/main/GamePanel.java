@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
+import VRM.entity.Entity;
 
 import VRM.entity.Player;
 import VRM.oggetti.SuperOggetti;
@@ -34,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Sistema
     TileManager tileM = new TileManager(this);
-    ControlloTastiera keyH = new ControlloTastiera();
+    ControlloTastiera keyH = new ControlloTastiera(this);
     Sound music = new Sound();
     Sound se = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -46,6 +47,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Player player = new Player(this, keyH);
     public SuperOggetti obj[] = new SuperOggetti[10]; // numero di oggetti che possiamo avere
+
+    public Entity npc[] = new Entity[10]; // numero di npc che possiamo avere
 
     // Stato di gioco
     public int gameState;
@@ -72,8 +75,9 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() { // lo chiamiamo prima che il gameThred cominci
 
         aSetter.setObject();
-
+        aSetter.setNPC();
         playMusic(0);
+        gameState = playState;
 
     }
 
@@ -83,39 +87,6 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
 
     }
-
-    // public void run() {
-
-    // double drawInterval = 1000000000 / FPS;
-    // double nextDrawTime = System.nanoTime() + drawInterval;
-
-    // while (gameThread != null) {
-
-    // update();
-    // System.out.println(playerX);
-    // System.out.println(playerY);
-
-    // repaint();
-
-    // try {
-    // double remainingTime = nextDrawTime - System.nanoTime();
-    // remainingTime = remainingTime / 1000000;
-
-    // if (remainingTime < 0) {
-    // remainingTime = 0;
-    // }
-
-    // Thread.sleep((long) remainingTime);
-
-    // nextDrawTime += drawInterval;
-
-    // } catch (InterruptedException e) {
-
-    // e.printStackTrace();
-    // }
-    // }
-
-    // }
 
     public void run() {
 
@@ -157,7 +128,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
-        player.update();
+        if (gameState == playState) {
+            player.update();
+        }
+        if (gameState == pauseState) {
+            // niente
+        }
 
     }
 
@@ -178,6 +154,12 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < obj.length; i++) {
             if (obj[i] != null) { // ci serve sapere se abbiamo uno slot oggetti vuoto oppure no
                 obj[i].draw(g2, this);
+            }
+        }
+        // NPC
+        for (int i = 0; i < npc.length; i++) {
+            if (npc[i] != null) {
+                npc[i].draw(g2);
             }
         }
 
