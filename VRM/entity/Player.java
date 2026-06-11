@@ -99,11 +99,11 @@ public class Player extends Entity {
 
     public void update() {
 
-        if (keyH.movimentoSU == true || keyH.movimentoDestra == true ||
+        if (keyH.movimentoSu == true || keyH.movimentoDestra == true ||
                 keyH.movimentoGiu == true || keyH.movimentoSinistra == true) {
 
-            if (keyH.movimentoSU == true) {
-                direzione = "SU";
+            if (keyH.movimentoSu == true) {
+                direzione = "Su";
 
             } else if (keyH.movimentoGiu == true) {
                 direzione = "Giu";
@@ -123,10 +123,14 @@ public class Player extends Entity {
             int objIndex = gp.cChecker.checkObject(this, true);
             pickUpObject(objIndex);
 
+            // NPC collision
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
+
             // se la collsione è false il giocatore non deve potersi muovere
             if (collisionOn == false) {
                 switch (direzione) {
-                    case "SU":
+                    case "Su":
                         worldY -= speed;
                         break;
                     case "Giu":
@@ -169,6 +173,12 @@ public class Player extends Entity {
         }
     }
 
+    public void interactNPC(int i) {
+        if (i != 999) {
+            System.out.println("Collisione con NPC");
+        }
+    }
+
     public void draw(Graphics2D g2) {
 
         // g2.setColor(Color.WHITE);
@@ -178,7 +188,7 @@ public class Player extends Entity {
         BufferedImage image = null;
 
         switch (direzione) {
-            case "SU":
+            case "Su":
                 if (spriteNum == 1) {
                     image = up1;
                 }

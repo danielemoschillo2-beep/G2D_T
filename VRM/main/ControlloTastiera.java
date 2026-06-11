@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class ControlloTastiera implements KeyListener {
 
     GamePanel gp;
-    public boolean movimentoSU, movimentoGiu, movimentoDestra, movimentoSinistra;
+    public boolean movimentoSu, movimentoGiu, movimentoDestra, movimentoSinistra;
     // Debug
     public boolean checkDrawTime = false;
 
@@ -24,7 +24,7 @@ public class ControlloTastiera implements KeyListener {
 
         if (code == KeyEvent.VK_W) {
 
-            movimentoSU = true;
+            movimentoSu = true;
         }
         if (code == KeyEvent.VK_S) {
 
@@ -64,7 +64,7 @@ public class ControlloTastiera implements KeyListener {
 
         if (code == KeyEvent.VK_W) {
 
-            movimentoSU = false;
+            movimentoSu = false;
         }
         if (code == KeyEvent.VK_S) {
 

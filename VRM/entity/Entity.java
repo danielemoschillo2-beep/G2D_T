@@ -25,13 +25,40 @@ public class Entity {
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
+    public int actionLockCounter = 0;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
 
-    public void update() {
+    public void setAction() {
         // da implementare
+    }
+
+    public void update() {
+
+        setAction();
+
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+
+        if (collisionOn == false) {
+
+            switch (direzione) {
+                case "Su":
+                    worldY -= speed;
+                    break;
+                case "Giu":
+                    worldY += speed;
+                    break;
+                case "Sinistra":
+                    worldX -= speed;
+                    break;
+                case "Destra":
+                    worldX += speed;
+                    break;
+            }
+        }
     }
 
     public void draw(Graphics2D g2) {
@@ -79,7 +106,18 @@ public class Entity {
                         image = right2;
                     }
                     break;
+            }
+            spriteCounter++;
 
+            if (spriteCounter > 12) {
+
+                if (spriteNum == 1) {
+                    spriteNum = 2;
+                } else if (spriteNum == 2) {
+                    spriteNum = 1;
+                }
+
+                spriteCounter = 0;
             }
 
             g2.drawImage(image, screenX, screenY, null);

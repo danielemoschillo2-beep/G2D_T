@@ -1,5 +1,7 @@
 package VRM.entity;
 
+import java.util.Random;
+
 import VRM.main.GamePanel;
 
 public class NPC_OldMan extends Entity {
@@ -24,6 +26,32 @@ public class NPC_OldMan extends Entity {
         right1 = setup("/VRM/res/npc/oldman_right_1");
         right2 = setup("/VRM/res/npc/oldman_right_2");
 
+    }
+
+    public void setAction() {
+
+        actionLockCounter++;
+
+        if (actionLockCounter == 120) {
+
+            Random random = new Random();
+            int i = random.nextInt(100) + 1; // da 1 a 100
+
+            if (i <= 25) {
+                direzione = "Su";
+            }
+            if (i > 25 && i <= 50) {
+                direzione = "Giu";
+            }
+            if (i > 50 && i <= 75) {
+                direzione = "Sinistra";
+            }
+            if (i > 75) {
+                direzione = "Destra";
+            }
+
+            actionLockCounter = 0;
+        }
     }
 
 }
