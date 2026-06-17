@@ -13,6 +13,16 @@ public class NPC_OldMan extends Entity {
         speed = 1;
 
         getImage();
+        setDialogue();
+    }
+
+    public void setDialogue() {
+
+        dialogues[0] = "Ciao ragazzo!";
+        dialogues[1] = "Ti consiglio di esplorare il villaggio.";
+        dialogues[2] = "Ci sono molti segreti da scoprire.";
+        dialogues[3] = "Buona fortuna!";
+
     }
 
     public void getImage() {
@@ -52,6 +62,12 @@ public class NPC_OldMan extends Entity {
 
             actionLockCounter = 0;
         }
+    }
+
+    public void speak() {
+
+        super.speak();
+
     }
 
 }

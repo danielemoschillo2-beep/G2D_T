@@ -5,13 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 //import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import VRM.main.ControlloTastiera;
 import VRM.main.GamePanel;
-import VRM.main.UtilityTool;
 
 public class Player extends Entity {
 
@@ -175,7 +171,10 @@ public class Player extends Entity {
 
     public void interactNPC(int i) {
         if (i != 999) {
-            System.out.println("Collisione con NPC");
+
+            gp.gameState = gp.dialogueState;
+            gp.npc[i].speak();
+
         }
     }
 

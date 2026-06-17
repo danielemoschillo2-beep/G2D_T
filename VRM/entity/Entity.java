@@ -27,6 +27,9 @@ public class Entity {
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
 
+    public String dialogues[] = new String[20];
+    public int dialogueIndex = 0;
+
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
@@ -35,12 +38,39 @@ public class Entity {
         // da implementare
     }
 
+    public void speak() {
+
+        if (dialogues[dialogueIndex] == null) {
+            dialogueIndex = 0;
+        }
+        gp.ui.currentDialogue = dialogues[dialogueIndex];
+        dialogueIndex++;
+
+        switch (gp.player.direzione) {
+            case "Su":
+                direzione = "Giu";
+                break;
+            case "Giu":
+                direzione = "Su";
+                break;
+            case "Sinistra":
+                direzione = "Destra";
+                break;
+            case "Destra":
+                direzione = "Sinistra";
+                break;
+        }
+
+    }
+
     public void update() {
 
         setAction();
 
         collisionOn = false;
         gp.cChecker.checkTile(this);
+        gp.cChecker.checkObject(this, false);
+        gp.cChecker.checkPlayer(this);
 
         if (collisionOn == false) {
 

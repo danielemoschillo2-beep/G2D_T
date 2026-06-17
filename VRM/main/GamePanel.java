@@ -52,8 +52,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Stato di gioco
     public int gameState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialogueState = 3;
 
     // giocatore in posizione base (ci seerviva prima per vedere
     // se funzionava (prima della creazione delle mappe di gioco))
@@ -77,7 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject();
         aSetter.setNPC();
         playMusic(0);
-        gameState = playState;
+        gameState = titleState;
 
     }
 
@@ -155,27 +157,36 @@ public class GamePanel extends JPanel implements Runnable {
             drawStart = System.nanoTime();
         }
 
-        // tile prima del player così non disegniamo sopra al personaggio
-        tileM.draw(g2);
+        // Titolo
+        if (gameState == titleState) {
 
-        // Oggetti
-        for (int i = 0; i < obj.length; i++) {
-            if (obj[i] != null) { // ci serve sapere se abbiamo uno slot oggetti vuoto oppure no
-                obj[i].draw(g2, this);
+            ui.draw(g2);
+
+        } else {
+
+            // tile prima del player così non disegniamo sopra al personaggio
+            tileM.draw(g2);
+
+            // Oggetti
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) { // ci serve sapere se abbiamo uno slot oggetti vuoto oppure no
+                    obj[i].draw(g2, this);
+                }
             }
-        }
-        // NPC
-        for (int i = 0; i < npc.length; i++) {
-            if (npc[i] != null) {
-                npc[i].draw(g2);
+            // NPC
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
+                    npc[i].draw(g2);
+                }
             }
+
+            // giocatore
+            player.draw(g2);
+
+            // UI
+            ui.draw(g2);
+
         }
-
-        // giocatore
-        player.draw(g2);
-
-        // UI
-        ui.draw(g2);
 
         // Debug
         if (keyH.checkDrawTime == true) {

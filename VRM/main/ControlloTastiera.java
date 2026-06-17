@@ -22,37 +22,58 @@ public class ControlloTastiera implements KeyListener {
 
         int code = e.getKeyCode();
 
-        if (code == KeyEvent.VK_W) {
+        // palyState
+        if (gp.gameState == gp.playState) {
 
-            movimentoSu = true;
-        }
-        if (code == KeyEvent.VK_S) {
+            if (code == KeyEvent.VK_W) {
 
-            movimentoGiu = true;
-        }
-        if (code == KeyEvent.VK_A) {
-
-            movimentoSinistra = true;
-        }
-        if (code == KeyEvent.VK_D) {
-
-            movimentoDestra = true;
-        }
-        if (code == KeyEvent.VK_P) {
-
-            if (gp.gameState == gp.playState) {
-                gp.gameState = gp.pauseState;
-            } else if (gp.gameState == gp.pauseState) {
-                gp.gameState = gp.playState;
+                movimentoSu = true;
             }
-        }
+            if (code == KeyEvent.VK_S) {
 
-        // Debug
-        if (code == KeyEvent.VK_T) {
-            if (checkDrawTime == false) {
-                checkDrawTime = true;
-            } else if (checkDrawTime == true) {
-                checkDrawTime = false;
+                movimentoGiu = true;
+            }
+            if (code == KeyEvent.VK_A) {
+
+                movimentoSinistra = true;
+            }
+            if (code == KeyEvent.VK_D) {
+
+                movimentoDestra = true;
+            }
+            if (code == KeyEvent.VK_P) {
+
+                if (gp.gameState == gp.playState) {
+                    gp.gameState = gp.pauseState;
+                }
+            }
+
+            // Debug
+            if (code == KeyEvent.VK_T) {
+                if (checkDrawTime == false) {
+                    checkDrawTime = true;
+                } else if (checkDrawTime == true) {
+                    checkDrawTime = false;
+                }
+            }
+
+        }
+        // PAUSA
+        else if (gp.gameState == gp.pauseState) {
+
+            if (code == KeyEvent.VK_P) {
+
+                if (gp.gameState == gp.pauseState) {
+                    gp.gameState = gp.playState;
+                }
+            }
+
+        }
+        // DIALOGO
+        else if (gp.gameState == gp.dialogueState) {
+
+            if (code == KeyEvent.VK_ENTER) {
+                gp.gameState = gp.playState;
             }
         }
 
