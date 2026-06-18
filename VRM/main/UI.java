@@ -3,6 +3,9 @@ package VRM.main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import VRM.oggetti.OBJ_Heart;
+import VRM.oggetti.SuperOggetti;
 
 public class UI {
 
@@ -10,17 +13,26 @@ public class UI {
     Graphics2D g2;
     Font arial_40, arial_80B;
     Font arial_30;
+    BufferedImage heart_full, heart_half, heart_blank;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
     public String currentDialogue = "";
+    public int commandNum = 0;
 
     public UI(GamePanel gp) {
         this.gp = gp;
 
         arial_40 = new Font("Arial", Font.PLAIN, 30);
         arial_80B = new Font("Arial", Font.BOLD, 80);
+
+        // HUB OGGETTI
+
+        SuperOggetti heart = new OBJ_Heart(gp);
+        heart_full = heart.image;
+        heart_half = heart.image2;
+        heart_blank = heart.image3;
     }
 
     public void showMessage(String text) {
@@ -44,16 +56,52 @@ public class UI {
             drawTitleScreen();
 
         }
+        // in game
         if (gp.gameState == gp.playState) {
-            // dopo
+            drawPlayerLife();
         }
         // Pausa
         if (gp.gameState == gp.pauseState) {
+            drawPlayerLife();
             drawPauseScreen();
         }
         // Dialogo
         if (gp.gameState == gp.dialogueState) {
+            drawPlayerLife();
             drawDialogueScreen();
+        }
+    }
+
+    public void drawPlayerLife() {
+
+        int x = gp.tileSize / 2;
+        int y = gp.tileSize / 2;
+        int i = 0;
+
+        // Disegna max cuori
+        while (i < gp.player.maxLife / 2) {
+
+            g2.drawImage(heart_blank, x, y, null);
+            i++;
+            x += gp.tileSize;
+        }
+
+        // reset
+        x = gp.tileSize / 2;
+        y = gp.tileSize / 2;
+        i = 0;
+
+        // Disegna vita corrente
+        while (i < gp.player.life) {
+
+            g2.drawImage(heart_half, x, y, null);
+            i++;
+            if (i < gp.player.life) {
+                g2.drawImage(heart_full, x, y, null);
+            }
+            i++;
+            x += gp.tileSize;
+
         }
     }
 
@@ -88,16 +136,25 @@ public class UI {
         x = getXforCenteredText(text);
         y += gp.tileSize * 3.5;
         g2.drawString(text, x, y);
+        if (commandNum == 0) {
+            g2.drawString(">", x - gp.tileSize, y);
+        }
 
         text = "CARICA PARTITA";
         x = getXforCenteredText(text);
         y += gp.tileSize;
         g2.drawString(text, x, y);
+        if (commandNum == 1) {
+            g2.drawString(">", x - gp.tileSize, y);
+        }
 
         text = "ESCI";
         x = getXforCenteredText(text);
         y += gp.tileSize;
         g2.drawString(text, x, y);
+        if (commandNum == 2) {
+            g2.drawString(">", x - gp.tileSize, y);
+        }
     }
 
     public void drawPauseScreen() {

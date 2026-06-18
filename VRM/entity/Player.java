@@ -45,6 +45,10 @@ public class Player extends Entity {
         speed = 4;
         direzione = "Giu";
 
+        // Stato del player
+        maxLife = 6;
+        life = maxLife;
+
     }
 
     public void getPlayerImage() {
@@ -122,6 +126,11 @@ public class Player extends Entity {
             // NPC collision
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
+
+            // CHECK EVENTI
+            gp.eHandler.checkEvent();
+
+            gp.keyH.enterPressed = false;
 
             // se la collsione è false il giocatore non deve potersi muovere
             if (collisionOn == false) {
